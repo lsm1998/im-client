@@ -18,7 +18,7 @@ public class ContextAwareUtil implements ApplicationContextAware
         ContextAwareUtil.applicationContext = applicationContext;
     }
 
-    public static BaseUI getIndexPage() throws BeansException
+    public static BaseUI getIndexPage()
     {
         return applicationContext.getBean(LoginUI.class);
     }

@@ -1,5 +1,8 @@
 package com.lsm1998.im.socket;
 
+import com.google.protobuf.ByteString;
+import com.lsm1998.im.domain.User;
+import com.lsm1998.im.listener.ContextAwareUtil;
 import message.MessageOuterClass;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,7 @@ public class TcpClient
             Socket socket = new Socket(address, port);
             this.outputStream = socket.getOutputStream();
             this.inputStream = socket.getInputStream();
+            new ResponseHandler(this.inputStream).start();
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -37,12 +41,25 @@ public class TcpClient
         System.out.println("连接完成");
     }
 
-    public void sendHandshake()
+    /**
+     * 发送握手信息
+     *
+     * @param token
+     * @throws IOException
+     */
+    public void sendHandshake(String token) throws IOException
     {
-
+        User user = ContextAwareUtil.getUser();
+        ByteString body = ByteString.EMPTY;
+        ByteString.newOutput().write(token.getBytes());
+        this.send(MessageOuterClass.Message.newBuilder()
+                .setLength(token.getBytes().length)
+                .setCmd(MessageOuterClass.RequestType.Handshake)
+                .setFormId(user.getId())
+                .setBody(body).build());
     }
 
-    public void send(MessageOuterClass.Message msg) throws IOException
+    private void send(MessageOuterClass.Message msg) throws IOException
     {
         MessageOuterClass.MessageRequest request = MessageOuterClass.
                 MessageRequest.newBuilder()

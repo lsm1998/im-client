@@ -24,11 +24,18 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
+        <!-- protobuf-java -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
             <version>4.0.0-rc-2</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
