@@ -1,0 +1,10 @@
+server:
+  im:
+    address: 127.0.0.1
+    port: 9000
+  web:
+    address: 127.0.0.1
+    port: 8888
+  file:
+    address: 127.0.0.1
+    port: 8080

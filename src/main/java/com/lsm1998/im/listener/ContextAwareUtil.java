@@ -22,4 +22,9 @@ public class ContextAwareUtil implements ApplicationContextAware
     {
         return applicationContext.getBean(LoginUI.class);
     }
+
+    public static <E> E getBean(Class<E> c)
+    {
+        return applicationContext.getBean(c);
+    }
 }

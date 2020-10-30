@@ -1,17 +1,85 @@
 package com.lsm1998.im.ui;
 
+import com.lsm1998.im.config.GlobalConfig;
+import com.lsm1998.im.listener.ContextAwareUtil;
+import com.lsm1998.im.service.HttpService;
+import com.lsm1998.im.utils.ImageUtil;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 @Component
 @Scope(value = "prototype")
 public class LoginUI extends BaseUI
 {
+    private GlobalConfig globalConfig;
+    private HttpService httpService;
 
+    private JLabel usernameLabel;
+    private JLabel passwordLabel;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+
+    private JButton loginButton;
+    private JButton registerButton;
 
     public LoginUI()
     {
-        this.setSize(800,500);
+        setIconImage(ImageUtil.getImageByPath("/static/images/icon.png"));
+        this.setSize(500, 300);
+        this.setLayout(null);
+        this.globalConfig = ContextAwareUtil.getBean(GlobalConfig.class);
+        this.httpService = ContextAwareUtil.getBean(HttpService.class);
+        this.initLayout();
+    }
+
+    private void initLayout()
+    {
+        usernameLabel = new JLabel("账号");
+        passwordLabel = new JLabel("密码");
+        usernameField = new JTextField(100);
+        passwordField = new JPasswordField(100);
+        loginButton = new JButton("登录");
+        registerButton = new JButton("注册");
+        usernameLabel.setBounds(50, 20, 100, 50);
+        passwordLabel.setBounds(50, 130, 100, 50);
+        usernameField.setBounds(200, 20, 180, 50);
+        passwordField.setBounds(200, 130, 180, 50);
+        loginButton.setBounds(150, 200, 60, 25);
+        registerButton.setBounds(280, 200, 60, 25);
+        this.add(usernameLabel);
+        this.add(passwordLabel);
+        this.add(usernameField);
+        this.add(passwordField);
+        this.add(loginButton);
+        this.add(registerButton);
+        loginButton.addActionListener(this::loginAction);
+        registerButton.addActionListener(this::registerAction);
+    }
+
+    private void registerAction(ActionEvent event)
+    {
+        this.jumpPage(this, RegisterUI.class);
+    }
+
+    private void loginAction(ActionEvent event)
+    {
+        String username = usernameField.getText();
+        char[] password = passwordField.getPassword();
+        if (username.length() == 0 || password.length == 0)
+        {
+            JOptionPane.showMessageDialog(null, "请完善账号或密码", "提示", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (this.httpService.login(username, new String(password)))
+        {
+
+        } else
+        {
+            JOptionPane.showMessageDialog(null, "登录失败", "提示", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override

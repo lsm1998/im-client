@@ -1,7 +1,5 @@
 package com.lsm1998.im.socket;
 
-import com.lsm1998.im.bean.GlobalUser;
-import com.lsm1998.im.listener.ContextAwareUtil;
 import lombok.extern.slf4j.Slf4j;
 import message.MessageOuterClass;
 
@@ -15,6 +13,7 @@ public class ResponseHandler extends Thread
     private static final int MAX_LEN = 10 * 1024;
 
     private InputStream inputStream;
+    private boolean online;
 
     public ResponseHandler(InputStream inputStream)
     {
@@ -39,22 +38,32 @@ public class ResponseHandler extends Thread
     {
         try
         {
-            MessageOuterClass.Message message = MessageOuterClass.Message.parseFrom(bytes);
-            byte[] body = message.getBody().newInput().readAllBytes();
-            switch (message.getCmd())
+            MessageOuterClass.MessageRequest request = MessageOuterClass.MessageRequest.parseFrom(bytes);
+            if (request.getType() == MessageOuterClass.RequestType.Request)
             {
-                case Handshake:
-                    GlobalUser.setAesKey(new String(body));
-                    break;
-                case File:
-                    break;
-                case SystemBroadcast:
-                    System.out.println("收到广播消息:" + new String(body));
-                    break;
-                case PrivateMessage:
-                    System.out.println("收到私聊消息:" + new String(body));
-                    break;
+
+            } else if (request.getType() == MessageOuterClass.RequestType.Response)
+            {
+
+            } else
+            {
+                log.error("收到未知消息，RequestType=" + request.getType());
             }
+//            switch (message.getCmd())
+//            {
+//                case Handshake:
+//                    if (message)
+//                        GlobalUser.setAesKey(new String(body));
+//                    break;
+//                case File:
+//                    break;
+//                case SystemBroadcast:
+//                    log.info("收到广播消息:" + new String(body));
+//                    break;
+//                case PrivateMessage:
+//                    log.info("收到私聊消息:" + new String(body));
+//                    break;
+//            }
         } catch (Exception e)
         {
             log.error("parse Message error,err={}", e.getMessage());
@@ -78,5 +87,10 @@ public class ResponseHandler extends Thread
         {
             return EMPTY;
         }
+    }
+
+    public boolean isOnline()
+    {
+        return online;
     }
 }

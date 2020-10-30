@@ -1,5 +1,7 @@
 package com.lsm1998.im.ui;
 
+import com.lsm1998.im.listener.ContextAwareUtil;
+
 import javax.swing.*;
 
 public abstract class BaseUI extends JFrame
@@ -41,7 +43,19 @@ public abstract class BaseUI extends JFrame
 
     public <E> void setDate(E date)
     {
+
     }
 
     public abstract String title();
+
+    public void jumpPage(BaseUI oldPage,Class<? extends BaseUI> newPage)
+    {
+        newPage(newPage);
+        oldPage.dispose();
+    }
+
+    public void newPage(Class<? extends BaseUI> newPage)
+    {
+        ContextAwareUtil.getBean(newPage).showPage();
+    }
 }

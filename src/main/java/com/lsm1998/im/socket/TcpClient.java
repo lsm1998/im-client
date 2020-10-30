@@ -1,10 +1,12 @@
 package com.lsm1998.im.socket;
 
 import com.google.protobuf.ByteString;
+import com.lsm1998.im.config.GlobalConfig;
+import com.lsm1998.im.utils.GlobalUser;
 import com.lsm1998.im.domain.User;
-import com.lsm1998.im.listener.ContextAwareUtil;
+import lombok.extern.slf4j.Slf4j;
 import message.MessageOuterClass;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,13 +16,13 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 @Service
+@Slf4j
 public class TcpClient
 {
-    @Value("${server.address}")
-    private String address;
+    @Autowired
+    private GlobalConfig globalConfig;
 
-    @Value("${server.port}")
-    private Integer port;
+    private ResponseHandler responseHandler;
 
     private InputStream inputStream;
     private OutputStream outputStream;
@@ -30,15 +32,16 @@ public class TcpClient
     {
         try
         {
-            Socket socket = new Socket(address, port);
+            Socket socket = new Socket(globalConfig.getImServerAddress(), globalConfig.getImServerPort());
             this.outputStream = socket.getOutputStream();
             this.inputStream = socket.getInputStream();
-            new ResponseHandler(this.inputStream).start();
+            this.responseHandler = new ResponseHandler(this.inputStream);
+            this.responseHandler.start();
+            log.info("连接完成");
         } catch (IOException e)
         {
-            e.printStackTrace();
+            log.error("连接完成失败,err={}", e.getMessage());
         }
-        System.out.println("连接完成");
     }
 
     /**
@@ -49,21 +52,28 @@ public class TcpClient
      */
     public void sendHandshake(String token) throws IOException
     {
-        User user = ContextAwareUtil.getUser();
+        User user = GlobalUser.getUser();
         ByteString body = ByteString.EMPTY;
         ByteString.newOutput().write(token.getBytes());
-        this.send(MessageOuterClass.Message.newBuilder()
+        MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
                 .setLength(token.getBytes().length)
-                .setCmd(MessageOuterClass.RequestType.Handshake)
+                .setCmd(MessageOuterClass.MessageType.Handshake)
                 .setFormId(user.getId())
-                .setBody(body).build());
+                .setBody(body).build();
+        this.send(message);
     }
 
     private void send(MessageOuterClass.Message msg) throws IOException
     {
         MessageOuterClass.MessageRequest request = MessageOuterClass.
                 MessageRequest.newBuilder()
+                .setType(MessageOuterClass.RequestType.Request)
                 .setMessage(msg).build();
         this.outputStream.write(request.toByteArray());
+    }
+
+    public boolean isOnLien()
+    {
+        return this.responseHandler != null && this.responseHandler.isOnline();
     }
 }
