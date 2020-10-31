@@ -75,7 +75,7 @@ public class LoginUI extends BaseUI
         }
         if (this.httpService.login(username, new String(password)))
         {
-
+            this.jumpPage(this, MainUI.class);
         } else
         {
             JOptionPane.showMessageDialog(null, "登录失败", "提示", JOptionPane.ERROR_MESSAGE);

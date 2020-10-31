@@ -1,7 +1,10 @@
 package com.lsm1998.im.service;
 
 import com.lsm1998.im.config.GlobalConfig;
+import com.lsm1998.im.domain.User;
+import com.lsm1998.im.utils.GlobalUser;
 import com.lsm1998.im.utils.HTTPClientUtil;
+import com.lsm1998.im.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,16 +25,17 @@ public class HttpService
         String json = String.format("{\"username\": \"%s\", \"password\": \"%s\",\"rememberMe\":true}", username, password);
         try
         {
-            HttpResponse<String> response = HTTPClientUtil.post(globalConfig.getWebBaseUrl() + "/base/login", json, null);
+            HttpResponse<String> response = HTTPClientUtil.post(globalConfig.getWebBaseUrl() + "base/login", json, null);
             if (response.statusCode() == HTTP_OK)
             {
-                response.headers().map().forEach((k, v) ->
+                log.info("登录成功,body={}", response.body());
+                User user = JsonUtil.parseUser(response.body());
+                if (user == null)
                 {
-//                    if (AUTH_KEY.equals(k) && v.size() > 0)
-//                    {
-//                        token = v.get(0);
-//                    }
-                });
+                    log.error("解析user失败");
+                    return false;
+                }
+                GlobalUser.setUser(user);
                 return true;
             }
             return false;

@@ -10,13 +10,13 @@ import java.util.Objects;
 
 public class ImageUtil
 {
-    private static Toolkit toolKit = Toolkit.getDefaultToolkit();
+    private static final Toolkit toolKit = Toolkit.getDefaultToolkit();
 
-    public static Image getImageByUrl(String url)
+    public static ImageIcon getImageIconByUrl(String url)
     {
         try
         {
-            return toolKit.getImage(new URL(url));
+            return new ImageIcon(new URL(url));
         } catch (Exception e)
         {
             return null;
@@ -40,6 +40,28 @@ public class ImageUtil
         return null;
     }
 
+    public static Image getImageByUrl(String url)
+    {
+        try
+        {
+            return toolKit.getImage(new URL(url));
+        } catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public static ImageIcon getImageIconByUrl(String url, int width, int height)
+    {
+        try
+        {
+            return change(new ImageIcon(new URL(url)), width, height);
+        } catch (Exception e)
+        {
+            return null;
+        }
+    }
+
     public static Image getImageByPath(String path)
     {
         return getImageByStream(Objects.requireNonNull(FileUtil.getFile(path)));
@@ -55,5 +77,11 @@ public class ImageUtil
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static ImageIcon change(ImageIcon image, int width, int height)
+    {
+        Image img = image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        return new ImageIcon(img);
     }
 }

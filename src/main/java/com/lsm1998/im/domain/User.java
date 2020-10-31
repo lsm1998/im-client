@@ -9,6 +9,8 @@ public class User
 
     private String nickname;
 
+    private String username;
+
     private String aesKey;
 
     private String headImg;
