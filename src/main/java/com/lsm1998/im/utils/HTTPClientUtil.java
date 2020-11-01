@@ -62,4 +62,17 @@ public class HTTPClientUtil
         }
         return httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofString());
     }
+
+    public static HttpResponse<String> get(String url, Map<String, String> headers) throws IOException, InterruptedException
+    {
+        HttpRequest.Builder builder = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .GET();
+        if (headers != null)
+        {
+            headers.forEach(builder::header);
+        }
+        return httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofString());
+    }
 }

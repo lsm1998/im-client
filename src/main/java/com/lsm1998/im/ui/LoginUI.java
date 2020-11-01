@@ -1,6 +1,5 @@
 package com.lsm1998.im.ui;
 
-import com.lsm1998.im.config.GlobalConfig;
 import com.lsm1998.im.listener.ContextAwareUtil;
 import com.lsm1998.im.service.HttpService;
 import com.lsm1998.im.utils.ImageUtil;
@@ -14,8 +13,9 @@ import java.awt.event.ActionEvent;
 @Scope(value = "prototype")
 public class LoginUI extends BaseUI
 {
-    private GlobalConfig globalConfig;
     private HttpService httpService;
+
+    private JLabel backgroundLabel;
 
     private JLabel usernameLabel;
     private JLabel passwordLabel;
@@ -28,33 +28,35 @@ public class LoginUI extends BaseUI
     public LoginUI()
     {
         setIconImage(ImageUtil.getImageByPath("/static/images/icon.png"));
-        this.setSize(500, 300);
-        this.setLayout(null);
-        this.globalConfig = ContextAwareUtil.getBean(GlobalConfig.class);
+        this.setSize(430, 330);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.httpService = ContextAwareUtil.getBean(HttpService.class);
         this.initLayout();
     }
 
     private void initLayout()
     {
+        backgroundLabel= new JLabel(ImageUtil.getImageIconByPath("/static/images/login.png"));
+        backgroundLabel.setLayout(null);
         usernameLabel = new JLabel("账号");
         passwordLabel = new JLabel("密码");
         usernameField = new JTextField(100);
         passwordField = new JPasswordField(100);
         loginButton = new JButton("登录");
         registerButton = new JButton("注册");
-        usernameLabel.setBounds(50, 20, 100, 50);
-        passwordLabel.setBounds(50, 130, 100, 50);
-        usernameField.setBounds(200, 20, 180, 50);
-        passwordField.setBounds(200, 130, 180, 50);
-        loginButton.setBounds(150, 200, 60, 25);
-        registerButton.setBounds(280, 200, 60, 25);
-        this.add(usernameLabel);
-        this.add(passwordLabel);
-        this.add(usernameField);
-        this.add(passwordField);
-        this.add(loginButton);
-        this.add(registerButton);
+        usernameLabel.setBounds(100, 100, 100, 35);
+        usernameField.setBounds(200, 100, 180, 35);
+        passwordLabel.setBounds(100, 180, 100, 35);
+        passwordField.setBounds(200, 180, 180, 35);
+        loginButton.setBounds(150, 260, 60, 25);
+        registerButton.setBounds(230, 260, 60, 25);
+        backgroundLabel.add(usernameLabel);
+        backgroundLabel.add(passwordLabel);
+        backgroundLabel.add(usernameField);
+        backgroundLabel.add(passwordField);
+        backgroundLabel.add(loginButton);
+        backgroundLabel.add(registerButton);
+        this.add(backgroundLabel);
         loginButton.addActionListener(this::loginAction);
         registerButton.addActionListener(this::registerAction);
     }

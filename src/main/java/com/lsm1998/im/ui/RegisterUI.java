@@ -17,6 +17,7 @@ public class RegisterUI extends BaseUI
     {
         this.setSize(500, 300);
         this.setLayout(null);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.initLayout();
     }
 

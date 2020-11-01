@@ -13,8 +13,6 @@ public abstract class BaseUI extends JFrame
     {
         // 设置默认大小
         this.setSize(DEFAULT_H, DEFAULT_W);
-        // 退出窗口即退出
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         // 标题
         super.setTitle(this.title());
     }

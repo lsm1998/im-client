@@ -1,0 +1,1 @@
+java -jar -Djava.awt.headless=false -Dfile.encoding=UTF-8 im.jar
