@@ -3,6 +3,7 @@ package com.lsm1998.im.service;
 import com.lsm1998.im.config.GlobalConfig;
 import com.lsm1998.im.domain.Friends;
 import com.lsm1998.im.domain.User;
+import com.lsm1998.im.socket.TcpClient;
 import com.lsm1998.im.utils.GlobalUser;
 import com.lsm1998.im.utils.HTTPClientUtil;
 import com.lsm1998.im.utils.JsonUtil;
@@ -24,6 +25,9 @@ public class HttpService
     @Autowired
     private GlobalConfig globalConfig;
 
+    @Autowired
+    private TcpClient client;
+
     public boolean login(String username, String password)
     {
         String json = String.format("{\"username\": \"%s\", \"password\": \"%s\",\"rememberMe\":true}", username, password);
@@ -39,7 +43,10 @@ public class HttpService
                     log.error("解析user失败");
                     return false;
                 }
+                // 设置当前用户
                 GlobalUser.setUser(user);
+                // 发送握手请求
+                client.sendHandshake(user.getToken());
                 return true;
             }
             return false;

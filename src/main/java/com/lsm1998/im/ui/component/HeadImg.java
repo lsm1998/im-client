@@ -24,7 +24,7 @@ public class HeadImg extends DefaultListCellRenderer
         if (index >= 0 && index < userList.size())
         {
             User user = userList.get(index);
-            setIcon(ImageUtil.getImageIconByUrl(user.getHeadImg()));
+            setIcon(ImageUtil.getImageIconByUrl(user.getHeadImg(), 50, 50));
             setText(user.getNickname() + "(" + user.getUsername() + ")");
         }
 

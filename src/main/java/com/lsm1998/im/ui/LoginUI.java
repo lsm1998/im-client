@@ -13,17 +13,10 @@ import java.awt.event.ActionEvent;
 @Scope(value = "prototype")
 public class LoginUI extends BaseUI
 {
-    private HttpService httpService;
+    private final HttpService httpService;
 
-    private JLabel backgroundLabel;
-
-    private JLabel usernameLabel;
-    private JLabel passwordLabel;
     private JTextField usernameField;
     private JPasswordField passwordField;
-
-    private JButton loginButton;
-    private JButton registerButton;
 
     public LoginUI()
     {
@@ -36,18 +29,18 @@ public class LoginUI extends BaseUI
 
     private void initLayout()
     {
-        backgroundLabel= new JLabel(ImageUtil.getImageIconByPath("/static/images/login.png"));
+        JLabel backgroundLabel = new JLabel(ImageUtil.getImageIconByPath("/static/images/login.png"));
         backgroundLabel.setLayout(null);
-        usernameLabel = new JLabel("账号");
-        passwordLabel = new JLabel("密码");
+        JLabel usernameLabel = new JLabel("账号");
+        JLabel passwordLabel = new JLabel("密码");
         usernameField = new JTextField(100);
         passwordField = new JPasswordField(100);
-        loginButton = new JButton("登录");
-        registerButton = new JButton("注册");
+        JButton loginButton = new JButton("登录");
+        JButton registerButton = new JButton("注册");
         usernameLabel.setBounds(100, 100, 100, 35);
-        usernameField.setBounds(200, 100, 180, 35);
+        usernameField.setBounds(180, 100, 180, 35);
         passwordLabel.setBounds(100, 180, 100, 35);
-        passwordField.setBounds(200, 180, 180, 35);
+        passwordField.setBounds(180, 180, 180, 35);
         loginButton.setBounds(150, 260, 60, 25);
         registerButton.setBounds(230, 260, 60, 25);
         backgroundLabel.add(usernameLabel);

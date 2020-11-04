@@ -53,13 +53,11 @@ public class TcpClient
     public void sendHandshake(String token) throws IOException
     {
         User user = GlobalUser.getUser();
-        ByteString body = ByteString.EMPTY;
-        ByteString.newOutput().write(token.getBytes());
         MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
                 .setLength(token.getBytes().length)
                 .setCmd(MessageOuterClass.MessageType.Handshake)
                 .setFormId(user.getId())
-                .setBody(body).build();
+                .setBody(ByteString.copyFrom(token.getBytes())).build();
         this.send(message);
     }
 

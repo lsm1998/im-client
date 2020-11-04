@@ -9,7 +9,6 @@ import java.util.List;
 @Builder
 public class Friends
 {
-    private Long friendsId;
     private Long groupId;
     private List<User> userList;
 }

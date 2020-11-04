@@ -46,7 +46,6 @@ public class JsonUtil
         {
             JsonObject object = e.getAsJsonObject();
             Friends f = Friends.builder()
-                    .friendsId(object.get("id").getAsLong())
                     .groupId(object.get("group_id").getAsLong())
                     .userList(new ArrayList<>())
                     .build();
