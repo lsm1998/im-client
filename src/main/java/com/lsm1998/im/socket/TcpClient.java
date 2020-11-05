@@ -24,7 +24,6 @@ public class TcpClient
 
     private ResponseHandler responseHandler;
 
-    private InputStream inputStream;
     private OutputStream outputStream;
 
     @PostConstruct
@@ -34,14 +33,21 @@ public class TcpClient
         {
             Socket socket = new Socket(globalConfig.getImServerAddress(), globalConfig.getImServerPort());
             this.outputStream = socket.getOutputStream();
-            this.inputStream = socket.getInputStream();
-            this.responseHandler = new ResponseHandler(this.inputStream);
+            this.responseHandler = new ResponseHandler(socket.getInputStream());
             this.responseHandler.start();
             log.info("连接完成");
         } catch (IOException e)
         {
             log.error("连接完成失败,err={}", e.getMessage());
         }
+    }
+
+    public void sendPong() throws IOException
+    {
+        User user = GlobalUser.getUser();
+        MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
+                .setFormId(user.getId()).build();
+        this.send(message, MessageOuterClass.MessageType.Pong);
     }
 
     /**
@@ -55,17 +61,29 @@ public class TcpClient
         User user = GlobalUser.getUser();
         MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
                 .setLength(token.getBytes().length)
-                .setCmd(MessageOuterClass.MessageType.Handshake)
                 .setFormId(user.getId())
                 .setBody(ByteString.copyFrom(token.getBytes())).build();
-        this.send(message);
+        this.send(message, MessageOuterClass.MessageType.Handshake);
     }
 
-    private void send(MessageOuterClass.Message msg) throws IOException
+    public void sendPrivateMessage(long toId, String body) throws IOException
+    {
+        User user = GlobalUser.getUser();
+        MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
+                .setLength(body.getBytes().length)
+                .setFormId(user.getId())
+                .setToId(toId)
+                .setCreateTime(System.currentTimeMillis() / 1000)
+                .setBody(ByteString.copyFrom(body.getBytes())).build();
+        this.send(message, MessageOuterClass.MessageType.PrivateMessage);
+    }
+
+    private void send(MessageOuterClass.Message msg, MessageOuterClass.MessageType cmd) throws IOException
     {
         MessageOuterClass.MessageRequest request = MessageOuterClass.
                 MessageRequest.newBuilder()
                 .setType(MessageOuterClass.RequestType.Request)
+                .setCmd(cmd)
                 .setMessage(msg).build();
         this.outputStream.write(request.toByteArray());
     }

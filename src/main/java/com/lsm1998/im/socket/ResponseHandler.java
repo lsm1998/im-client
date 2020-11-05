@@ -1,8 +1,12 @@
 package com.lsm1998.im.socket;
 
+import com.lsm1998.im.event.message.MessageEvent;
+import com.lsm1998.im.utils.ContextAwareUtil;
+import com.lsm1998.im.utils.GlobalUser;
 import lombok.extern.slf4j.Slf4j;
 import message.MessageOuterClass;
 
+import javax.swing.*;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
@@ -18,6 +22,7 @@ public class ResponseHandler extends Thread
     public ResponseHandler(InputStream inputStream)
     {
         this.inputStream = inputStream;
+        this.online = false;
     }
 
     @Override
@@ -39,31 +44,16 @@ public class ResponseHandler extends Thread
         try
         {
             MessageOuterClass.MessageRequest request = MessageOuterClass.MessageRequest.parseFrom(bytes);
-            if (request.getType() == MessageOuterClass.RequestType.Request)
+            if (request.getType() == MessageOuterClass.RequestType.Request && request.hasMessage())
             {
-
-            } else if (request.getType() == MessageOuterClass.RequestType.Response)
+                handlerResponse(request.getMessage(), request.getCmd());
+            } else if (request.getType() == MessageOuterClass.RequestType.Response && request.hasResponse())
             {
-
+                handlerResponse(request.getResponse(), request.getCmd());
             } else
             {
-                log.error("收到未知消息，RequestType=" + request.getType());
+                log.error("收到未知消息，message=" + request);
             }
-//            switch (message.getCmd())
-//            {
-//                case Handshake:
-//                    if (message)
-//                        GlobalUser.setAesKey(new String(body));
-//                    break;
-//                case File:
-//                    break;
-//                case SystemBroadcast:
-//                    log.info("收到广播消息:" + new String(body));
-//                    break;
-//                case PrivateMessage:
-//                    log.info("收到私聊消息:" + new String(body));
-//                    break;
-//            }
         } catch (Exception e)
         {
             log.error("parse Message error,err={}", e.getMessage());
@@ -72,16 +62,15 @@ public class ResponseHandler extends Thread
 
     private byte[] readBytes(InputStream inputStream)
     {
-        try
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream())
         {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
             int len;
             do
             {
                 byte[] bytes = new byte[MAX_LEN];
                 len = inputStream.read(bytes);
                 bos.write(bytes, 0, len);
-            } while (len < MAX_LEN);
+            } while (len == MAX_LEN);
             return bos.toByteArray();
         } catch (Exception e)
         {
@@ -92,5 +81,49 @@ public class ResponseHandler extends Thread
     public boolean isOnline()
     {
         return online;
+    }
+
+    private void handlerResponse(MessageOuterClass.Reply reply, MessageOuterClass.MessageType cmd)
+    {
+        if (reply.getCode() == 200)
+        {
+            this.online = true;
+            switch (cmd)
+            {
+                case Handshake:
+                    GlobalUser.setAesKey(reply.getBody().toStringUtf8());
+                    break;
+                case PrivateMessage:
+                case Pong:
+            }
+        } else
+        {
+            JOptionPane.showMessageDialog(null, reply.getBody().toString(), "请求失败", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handlerResponse(MessageOuterClass.Message message, MessageOuterClass.MessageType cmd)
+    {
+        switch (cmd)
+        {
+            case PrivateMessage:
+                System.out.println("收到私聊消息");
+                // appendView
+                ContextAwareUtil.publishEvent(new MessageEvent(message));
+                break;
+            case SystemBroadcast:
+                System.out.println("收到系统消息");
+                break;
+            case Online:
+            case Offline:
+            case GroupMessage:
+                System.out.println("收到群发消息");
+                break;
+            case File:
+                System.out.println("收到文件消息");
+                break;
+        }
+        System.out.println("发送者ID=" + message.getFormId());
+        System.out.println("内容=" + message.getBody().toStringUtf8());
     }
 }

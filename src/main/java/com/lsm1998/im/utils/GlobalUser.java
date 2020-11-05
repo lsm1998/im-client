@@ -1,7 +1,9 @@
 package com.lsm1998.im.utils;
 
 import com.lsm1998.im.domain.User;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GlobalUser
 {
     private static User currentUser = null;
@@ -21,6 +23,7 @@ public class GlobalUser
         if (currentUser != null)
         {
             currentUser.setAesKey(aesKey);
+            log.info("设置aesKey={}", aesKey);
         }
     }
 

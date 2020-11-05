@@ -1,6 +1,7 @@
 package com.lsm1998.im.ui;
 
 import com.lsm1998.im.domain.User;
+import com.lsm1998.im.socket.TcpClient;
 import com.lsm1998.im.utils.ImageUtil;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 public class ChatUI extends BaseUI implements ActionListener, ItemListener
 {
+    private final TcpClient client;
     private JLabel title;
     JTextPane txtReceive, txtSend;
     private JButton btnSend, btnClose;
@@ -35,12 +38,13 @@ public class ChatUI extends BaseUI implements ActionListener, ItemListener
     private Font font;
     private JTextArea jTextArea;
 
-    public ChatUI(User myInfo, User friendInfo)
+    public ChatUI(User myInfo, User friendInfo, TcpClient client)
     {
+        this.client = client;
         String str = myInfo.getNickname() + "(" + myInfo.getUsername() + ")和";
         str += friendInfo.getNickname() + "(" + friendInfo.getUsername() + ")正在聊天...";
         setIconImage(ImageUtil.getImageIconByUrl(myInfo.getHeadImg(), 75, 75).getImage());
-        title = new JLabel(str, ImageUtil.getImageIconByUrl(myInfo.getHeadImg(), 75, 75), JLabel.LEFT);
+        title = new JLabel(str, ImageUtil.getImageIconByUrl(friendInfo.getHeadImg(), 75, 75), JLabel.LEFT);
         this.myInfo = myInfo;
         this.friendInfo = friendInfo;
         setTitle(str);
@@ -250,8 +254,9 @@ public class ChatUI extends BaseUI implements ActionListener, ItemListener
             try
             {
                 appendView(myInfo.getNickname(), txtSend.getStyledDocument());
+                this.client.sendPrivateMessage(friendInfo.getId(), txtSend.getText());
                 txtSend.setText("");
-            } catch (BadLocationException e1)
+            } catch (BadLocationException | IOException e1)
             {
                 e1.printStackTrace();
             }

@@ -359,42 +359,31 @@ public final class MessageOuterClass {
     long getId();
 
     /**
-     * <code>.message.MessageType cmd = 2;</code>
-     * @return The enum numeric value on the wire for cmd.
-     */
-    int getCmdValue();
-    /**
-     * <code>.message.MessageType cmd = 2;</code>
-     * @return The cmd.
-     */
-    MessageType getCmd();
-
-    /**
-     * <code>int64 form_id = 3;</code>
+     * <code>int64 form_id = 2;</code>
      * @return The formId.
      */
     long getFormId();
 
     /**
-     * <code>int64 to_id = 4;</code>
+     * <code>int64 to_id = 3;</code>
      * @return The toId.
      */
     long getToId();
 
     /**
-     * <code>int64 create_time = 5;</code>
+     * <code>int64 create_time = 4;</code>
      * @return The createTime.
      */
     long getCreateTime();
 
     /**
-     * <code>bytes body = 6;</code>
+     * <code>bytes body = 5;</code>
      * @return The body.
      */
     com.google.protobuf.ByteString getBody();
 
     /**
-     * <code>int32 length = 7;</code>
+     * <code>int32 length = 6;</code>
      * @return The length.
      */
     int getLength();
@@ -412,7 +401,6 @@ public final class MessageOuterClass {
       super(builder);
     }
     private Message() {
-      cmd_ = 0;
       body_ = com.google.protobuf.ByteString.EMPTY;
     }
 
@@ -452,32 +440,26 @@ public final class MessageOuterClass {
               break;
             }
             case 16: {
-              int rawValue = input.readEnum();
-
-              cmd_ = rawValue;
-              break;
-            }
-            case 24: {
 
               formId_ = input.readInt64();
               break;
             }
-            case 32: {
+            case 24: {
 
               toId_ = input.readInt64();
               break;
             }
-            case 40: {
+            case 32: {
 
               createTime_ = input.readInt64();
               break;
             }
-            case 50: {
+            case 42: {
 
               body_ = input.readBytes();
               break;
             }
-            case 56: {
+            case 48: {
 
               length_ = input.readInt32();
               break;
@@ -525,29 +507,10 @@ public final class MessageOuterClass {
       return id_;
     }
 
-    public static final int CMD_FIELD_NUMBER = 2;
-    private int cmd_;
-    /**
-     * <code>.message.MessageType cmd = 2;</code>
-     * @return The enum numeric value on the wire for cmd.
-     */
-    @Override public int getCmdValue() {
-      return cmd_;
-    }
-    /**
-     * <code>.message.MessageType cmd = 2;</code>
-     * @return The cmd.
-     */
-    @Override public MessageType getCmd() {
-      @SuppressWarnings("deprecation")
-      MessageType result = MessageType.valueOf(cmd_);
-      return result == null ? MessageType.UNRECOGNIZED : result;
-    }
-
-    public static final int FORM_ID_FIELD_NUMBER = 3;
+    public static final int FORM_ID_FIELD_NUMBER = 2;
     private long formId_;
     /**
-     * <code>int64 form_id = 3;</code>
+     * <code>int64 form_id = 2;</code>
      * @return The formId.
      */
     @Override
@@ -555,10 +518,10 @@ public final class MessageOuterClass {
       return formId_;
     }
 
-    public static final int TO_ID_FIELD_NUMBER = 4;
+    public static final int TO_ID_FIELD_NUMBER = 3;
     private long toId_;
     /**
-     * <code>int64 to_id = 4;</code>
+     * <code>int64 to_id = 3;</code>
      * @return The toId.
      */
     @Override
@@ -566,10 +529,10 @@ public final class MessageOuterClass {
       return toId_;
     }
 
-    public static final int CREATE_TIME_FIELD_NUMBER = 5;
+    public static final int CREATE_TIME_FIELD_NUMBER = 4;
     private long createTime_;
     /**
-     * <code>int64 create_time = 5;</code>
+     * <code>int64 create_time = 4;</code>
      * @return The createTime.
      */
     @Override
@@ -577,10 +540,10 @@ public final class MessageOuterClass {
       return createTime_;
     }
 
-    public static final int BODY_FIELD_NUMBER = 6;
+    public static final int BODY_FIELD_NUMBER = 5;
     private com.google.protobuf.ByteString body_;
     /**
-     * <code>bytes body = 6;</code>
+     * <code>bytes body = 5;</code>
      * @return The body.
      */
     @Override
@@ -588,10 +551,10 @@ public final class MessageOuterClass {
       return body_;
     }
 
-    public static final int LENGTH_FIELD_NUMBER = 7;
+    public static final int LENGTH_FIELD_NUMBER = 6;
     private int length_;
     /**
-     * <code>int32 length = 7;</code>
+     * <code>int32 length = 6;</code>
      * @return The length.
      */
     @Override
@@ -616,23 +579,20 @@ public final class MessageOuterClass {
       if (id_ != 0L) {
         output.writeInt64(1, id_);
       }
-      if (cmd_ != MessageType.Pong.getNumber()) {
-        output.writeEnum(2, cmd_);
-      }
       if (formId_ != 0L) {
-        output.writeInt64(3, formId_);
+        output.writeInt64(2, formId_);
       }
       if (toId_ != 0L) {
-        output.writeInt64(4, toId_);
+        output.writeInt64(3, toId_);
       }
       if (createTime_ != 0L) {
-        output.writeInt64(5, createTime_);
+        output.writeInt64(4, createTime_);
       }
       if (!body_.isEmpty()) {
-        output.writeBytes(6, body_);
+        output.writeBytes(5, body_);
       }
       if (length_ != 0) {
-        output.writeInt32(7, length_);
+        output.writeInt32(6, length_);
       }
       unknownFields.writeTo(output);
     }
@@ -647,29 +607,25 @@ public final class MessageOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, id_);
       }
-      if (cmd_ != MessageType.Pong.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, cmd_);
-      }
       if (formId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, formId_);
+          .computeInt64Size(2, formId_);
       }
       if (toId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(4, toId_);
+          .computeInt64Size(3, toId_);
       }
       if (createTime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(5, createTime_);
+          .computeInt64Size(4, createTime_);
       }
       if (!body_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(6, body_);
+          .computeBytesSize(5, body_);
       }
       if (length_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(7, length_);
+          .computeInt32Size(6, length_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -688,7 +644,6 @@ public final class MessageOuterClass {
 
       if (getId()
           != other.getId()) return false;
-      if (cmd_ != other.cmd_) return false;
       if (getFormId()
           != other.getFormId()) return false;
       if (getToId()
@@ -713,8 +668,6 @@ public final class MessageOuterClass {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + CMD_FIELD_NUMBER;
-      hash = (53 * hash) + cmd_;
       hash = (37 * hash) + FORM_ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getFormId());
@@ -863,8 +816,6 @@ public final class MessageOuterClass {
         super.clear();
         id_ = 0L;
 
-        cmd_ = 0;
-
         formId_ = 0L;
 
         toId_ = 0L;
@@ -902,7 +853,6 @@ public final class MessageOuterClass {
       public Message buildPartial() {
         Message result = new Message(this);
         result.id_ = id_;
-        result.cmd_ = cmd_;
         result.formId_ = formId_;
         result.toId_ = toId_;
         result.createTime_ = createTime_;
@@ -958,9 +908,6 @@ public final class MessageOuterClass {
         if (other == Message.getDefaultInstance()) return this;
         if (other.getId() != 0L) {
           setId(other.getId());
-        }
-        if (other.cmd_ != 0) {
-          setCmdValue(other.getCmdValue());
         }
         if (other.getFormId() != 0L) {
           setFormId(other.getFormId());
@@ -1037,63 +984,9 @@ public final class MessageOuterClass {
         return this;
       }
 
-      private int cmd_ = 0;
-      /**
-       * <code>.message.MessageType cmd = 2;</code>
-       * @return The enum numeric value on the wire for cmd.
-       */
-      @Override public int getCmdValue() {
-        return cmd_;
-      }
-      /**
-       * <code>.message.MessageType cmd = 2;</code>
-       * @param value The enum numeric value on the wire for cmd to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCmdValue(int value) {
-        
-        cmd_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.message.MessageType cmd = 2;</code>
-       * @return The cmd.
-       */
-      @Override
-      public MessageType getCmd() {
-        @SuppressWarnings("deprecation")
-        MessageType result = MessageType.valueOf(cmd_);
-        return result == null ? MessageType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.message.MessageType cmd = 2;</code>
-       * @param value The cmd to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCmd(MessageType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        cmd_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.message.MessageType cmd = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearCmd() {
-        
-        cmd_ = 0;
-        onChanged();
-        return this;
-      }
-
       private long formId_ ;
       /**
-       * <code>int64 form_id = 3;</code>
+       * <code>int64 form_id = 2;</code>
        * @return The formId.
        */
       @Override
@@ -1101,7 +994,7 @@ public final class MessageOuterClass {
         return formId_;
       }
       /**
-       * <code>int64 form_id = 3;</code>
+       * <code>int64 form_id = 2;</code>
        * @param value The formId to set.
        * @return This builder for chaining.
        */
@@ -1112,7 +1005,7 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>int64 form_id = 3;</code>
+       * <code>int64 form_id = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearFormId() {
@@ -1124,7 +1017,7 @@ public final class MessageOuterClass {
 
       private long toId_ ;
       /**
-       * <code>int64 to_id = 4;</code>
+       * <code>int64 to_id = 3;</code>
        * @return The toId.
        */
       @Override
@@ -1132,7 +1025,7 @@ public final class MessageOuterClass {
         return toId_;
       }
       /**
-       * <code>int64 to_id = 4;</code>
+       * <code>int64 to_id = 3;</code>
        * @param value The toId to set.
        * @return This builder for chaining.
        */
@@ -1143,7 +1036,7 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>int64 to_id = 4;</code>
+       * <code>int64 to_id = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearToId() {
@@ -1155,7 +1048,7 @@ public final class MessageOuterClass {
 
       private long createTime_ ;
       /**
-       * <code>int64 create_time = 5;</code>
+       * <code>int64 create_time = 4;</code>
        * @return The createTime.
        */
       @Override
@@ -1163,7 +1056,7 @@ public final class MessageOuterClass {
         return createTime_;
       }
       /**
-       * <code>int64 create_time = 5;</code>
+       * <code>int64 create_time = 4;</code>
        * @param value The createTime to set.
        * @return This builder for chaining.
        */
@@ -1174,7 +1067,7 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>int64 create_time = 5;</code>
+       * <code>int64 create_time = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearCreateTime() {
@@ -1186,7 +1079,7 @@ public final class MessageOuterClass {
 
       private com.google.protobuf.ByteString body_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>bytes body = 6;</code>
+       * <code>bytes body = 5;</code>
        * @return The body.
        */
       @Override
@@ -1194,7 +1087,7 @@ public final class MessageOuterClass {
         return body_;
       }
       /**
-       * <code>bytes body = 6;</code>
+       * <code>bytes body = 5;</code>
        * @param value The body to set.
        * @return This builder for chaining.
        */
@@ -1208,7 +1101,7 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>bytes body = 6;</code>
+       * <code>bytes body = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearBody() {
@@ -1220,7 +1113,7 @@ public final class MessageOuterClass {
 
       private int length_ ;
       /**
-       * <code>int32 length = 7;</code>
+       * <code>int32 length = 6;</code>
        * @return The length.
        */
       @Override
@@ -1228,7 +1121,7 @@ public final class MessageOuterClass {
         return length_;
       }
       /**
-       * <code>int32 length = 7;</code>
+       * <code>int32 length = 6;</code>
        * @param value The length to set.
        * @return This builder for chaining.
        */
@@ -1239,7 +1132,7 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>int32 length = 7;</code>
+       * <code>int32 length = 6;</code>
        * @return This builder for chaining.
        */
       public Builder clearLength() {
@@ -1317,32 +1210,43 @@ public final class MessageOuterClass {
     RequestType getType();
 
     /**
-     * <code>.message.Message message = 2;</code>
+     * <code>.message.MessageType cmd = 2;</code>
+     * @return The enum numeric value on the wire for cmd.
+     */
+    int getCmdValue();
+    /**
+     * <code>.message.MessageType cmd = 2;</code>
+     * @return The cmd.
+     */
+    MessageType getCmd();
+
+    /**
+     * <code>.message.Message message = 3;</code>
      * @return Whether the message field is set.
      */
     boolean hasMessage();
     /**
-     * <code>.message.Message message = 2;</code>
+     * <code>.message.Message message = 3;</code>
      * @return The message.
      */
     Message getMessage();
     /**
-     * <code>.message.Message message = 2;</code>
+     * <code>.message.Message message = 3;</code>
      */
     MessageOrBuilder getMessageOrBuilder();
 
     /**
-     * <code>.message.Reply response = 3;</code>
+     * <code>.message.Reply response = 4;</code>
      * @return Whether the response field is set.
      */
     boolean hasResponse();
     /**
-     * <code>.message.Reply response = 3;</code>
+     * <code>.message.Reply response = 4;</code>
      * @return The response.
      */
     Reply getResponse();
     /**
-     * <code>.message.Reply response = 3;</code>
+     * <code>.message.Reply response = 4;</code>
      */
     ReplyOrBuilder getResponseOrBuilder();
 
@@ -1362,6 +1266,7 @@ public final class MessageOuterClass {
     }
     private MessageRequest() {
       type_ = 0;
+      cmd_ = 0;
     }
 
     @Override
@@ -1400,9 +1305,15 @@ public final class MessageOuterClass {
               type_ = rawValue;
               break;
             }
-            case 18: {
+            case 16: {
+              int rawValue = input.readEnum();
+
+              cmd_ = rawValue;
+              break;
+            }
+            case 26: {
               Message.Builder subBuilder = null;
-              if (packCase_ == 2) {
+              if (packCase_ == 3) {
                 subBuilder = ((Message) pack_).toBuilder();
               }
               pack_ =
@@ -1411,12 +1322,12 @@ public final class MessageOuterClass {
                 subBuilder.mergeFrom((Message) pack_);
                 pack_ = subBuilder.buildPartial();
               }
-              packCase_ = 2;
+              packCase_ = 3;
               break;
             }
-            case 26: {
+            case 34: {
               Reply.Builder subBuilder = null;
-              if (packCase_ == 3) {
+              if (packCase_ == 4) {
                 subBuilder = ((Reply) pack_).toBuilder();
               }
               pack_ =
@@ -1425,7 +1336,7 @@ public final class MessageOuterClass {
                 subBuilder.mergeFrom((Reply) pack_);
                 pack_ = subBuilder.buildPartial();
               }
-              packCase_ = 3;
+              packCase_ = 4;
               break;
             }
             default: {
@@ -1465,8 +1376,8 @@ public final class MessageOuterClass {
     public enum PackCase
         implements com.google.protobuf.Internal.EnumLite,
             InternalOneOfEnum {
-      MESSAGE(2),
-      RESPONSE(3),
+      MESSAGE(3),
+      RESPONSE(4),
       PACK_NOT_SET(0);
       private final int value;
       private PackCase(int value) {
@@ -1484,8 +1395,8 @@ public final class MessageOuterClass {
 
       public static PackCase forNumber(int value) {
         switch (value) {
-          case 2: return MESSAGE;
-          case 3: return RESPONSE;
+          case 3: return MESSAGE;
+          case 4: return RESPONSE;
           case 0: return PACK_NOT_SET;
           default: return null;
         }
@@ -1520,63 +1431,82 @@ public final class MessageOuterClass {
       return result == null ? RequestType.UNRECOGNIZED : result;
     }
 
-    public static final int MESSAGE_FIELD_NUMBER = 2;
+    public static final int CMD_FIELD_NUMBER = 2;
+    private int cmd_;
     /**
-     * <code>.message.Message message = 2;</code>
+     * <code>.message.MessageType cmd = 2;</code>
+     * @return The enum numeric value on the wire for cmd.
+     */
+    @Override public int getCmdValue() {
+      return cmd_;
+    }
+    /**
+     * <code>.message.MessageType cmd = 2;</code>
+     * @return The cmd.
+     */
+    @Override public MessageType getCmd() {
+      @SuppressWarnings("deprecation")
+      MessageType result = MessageType.valueOf(cmd_);
+      return result == null ? MessageType.UNRECOGNIZED : result;
+    }
+
+    public static final int MESSAGE_FIELD_NUMBER = 3;
+    /**
+     * <code>.message.Message message = 3;</code>
      * @return Whether the message field is set.
      */
     @Override
     public boolean hasMessage() {
-      return packCase_ == 2;
+      return packCase_ == 3;
     }
     /**
-     * <code>.message.Message message = 2;</code>
+     * <code>.message.Message message = 3;</code>
      * @return The message.
      */
     @Override
     public Message getMessage() {
-      if (packCase_ == 2) {
+      if (packCase_ == 3) {
          return (Message) pack_;
       }
       return Message.getDefaultInstance();
     }
     /**
-     * <code>.message.Message message = 2;</code>
+     * <code>.message.Message message = 3;</code>
      */
     @Override
     public MessageOrBuilder getMessageOrBuilder() {
-      if (packCase_ == 2) {
+      if (packCase_ == 3) {
          return (Message) pack_;
       }
       return Message.getDefaultInstance();
     }
 
-    public static final int RESPONSE_FIELD_NUMBER = 3;
+    public static final int RESPONSE_FIELD_NUMBER = 4;
     /**
-     * <code>.message.Reply response = 3;</code>
+     * <code>.message.Reply response = 4;</code>
      * @return Whether the response field is set.
      */
     @Override
     public boolean hasResponse() {
-      return packCase_ == 3;
+      return packCase_ == 4;
     }
     /**
-     * <code>.message.Reply response = 3;</code>
+     * <code>.message.Reply response = 4;</code>
      * @return The response.
      */
     @Override
     public Reply getResponse() {
-      if (packCase_ == 3) {
+      if (packCase_ == 4) {
          return (Reply) pack_;
       }
       return Reply.getDefaultInstance();
     }
     /**
-     * <code>.message.Reply response = 3;</code>
+     * <code>.message.Reply response = 4;</code>
      */
     @Override
     public ReplyOrBuilder getResponseOrBuilder() {
-      if (packCase_ == 3) {
+      if (packCase_ == 4) {
          return (Reply) pack_;
       }
       return Reply.getDefaultInstance();
@@ -1599,11 +1529,14 @@ public final class MessageOuterClass {
       if (type_ != RequestType.Request.getNumber()) {
         output.writeEnum(1, type_);
       }
-      if (packCase_ == 2) {
-        output.writeMessage(2, (Message) pack_);
+      if (cmd_ != MessageType.Pong.getNumber()) {
+        output.writeEnum(2, cmd_);
       }
       if (packCase_ == 3) {
-        output.writeMessage(3, (Reply) pack_);
+        output.writeMessage(3, (Message) pack_);
+      }
+      if (packCase_ == 4) {
+        output.writeMessage(4, (Reply) pack_);
       }
       unknownFields.writeTo(output);
     }
@@ -1618,13 +1551,17 @@ public final class MessageOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, type_);
       }
-      if (packCase_ == 2) {
+      if (cmd_ != MessageType.Pong.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (Message) pack_);
+          .computeEnumSize(2, cmd_);
       }
       if (packCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (Reply) pack_);
+          .computeMessageSize(3, (Message) pack_);
+      }
+      if (packCase_ == 4) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, (Reply) pack_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1642,13 +1579,14 @@ public final class MessageOuterClass {
       MessageRequest other = (MessageRequest) obj;
 
       if (type_ != other.type_) return false;
+      if (cmd_ != other.cmd_) return false;
       if (!getPackCase().equals(other.getPackCase())) return false;
       switch (packCase_) {
-        case 2:
+        case 3:
           if (!getMessage()
               .equals(other.getMessage())) return false;
           break;
-        case 3:
+        case 4:
           if (!getResponse()
               .equals(other.getResponse())) return false;
           break;
@@ -1668,12 +1606,14 @@ public final class MessageOuterClass {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + type_;
+      hash = (37 * hash) + CMD_FIELD_NUMBER;
+      hash = (53 * hash) + cmd_;
       switch (packCase_) {
-        case 2:
+        case 3:
           hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
           hash = (53 * hash) + getMessage().hashCode();
           break;
-        case 3:
+        case 4:
           hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
           hash = (53 * hash) + getResponse().hashCode();
           break;
@@ -1815,6 +1755,8 @@ public final class MessageOuterClass {
         super.clear();
         type_ = 0;
 
+        cmd_ = 0;
+
         packCase_ = 0;
         pack_ = null;
         return this;
@@ -1844,14 +1786,15 @@ public final class MessageOuterClass {
       public MessageRequest buildPartial() {
         MessageRequest result = new MessageRequest(this);
         result.type_ = type_;
-        if (packCase_ == 2) {
+        result.cmd_ = cmd_;
+        if (packCase_ == 3) {
           if (messageBuilder_ == null) {
             result.pack_ = pack_;
           } else {
             result.pack_ = messageBuilder_.build();
           }
         }
-        if (packCase_ == 3) {
+        if (packCase_ == 4) {
           if (responseBuilder_ == null) {
             result.pack_ = pack_;
           } else {
@@ -1909,6 +1852,9 @@ public final class MessageOuterClass {
         if (other == MessageRequest.getDefaultInstance()) return this;
         if (other.type_ != 0) {
           setTypeValue(other.getTypeValue());
+        }
+        if (other.cmd_ != 0) {
+          setCmdValue(other.getCmdValue());
         }
         switch (other.getPackCase()) {
           case MESSAGE: {
@@ -2021,36 +1967,90 @@ public final class MessageOuterClass {
         return this;
       }
 
+      private int cmd_ = 0;
+      /**
+       * <code>.message.MessageType cmd = 2;</code>
+       * @return The enum numeric value on the wire for cmd.
+       */
+      @Override public int getCmdValue() {
+        return cmd_;
+      }
+      /**
+       * <code>.message.MessageType cmd = 2;</code>
+       * @param value The enum numeric value on the wire for cmd to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCmdValue(int value) {
+        
+        cmd_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.message.MessageType cmd = 2;</code>
+       * @return The cmd.
+       */
+      @Override
+      public MessageType getCmd() {
+        @SuppressWarnings("deprecation")
+        MessageType result = MessageType.valueOf(cmd_);
+        return result == null ? MessageType.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.message.MessageType cmd = 2;</code>
+       * @param value The cmd to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCmd(MessageType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        cmd_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.message.MessageType cmd = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCmd() {
+        
+        cmd_ = 0;
+        onChanged();
+        return this;
+      }
+
       private com.google.protobuf.SingleFieldBuilderV3<
           Message, Message.Builder, MessageOrBuilder> messageBuilder_;
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        * @return Whether the message field is set.
        */
       @Override
       public boolean hasMessage() {
-        return packCase_ == 2;
+        return packCase_ == 3;
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        * @return The message.
        */
       @Override
       public Message getMessage() {
         if (messageBuilder_ == null) {
-          if (packCase_ == 2) {
+          if (packCase_ == 3) {
             return (Message) pack_;
           }
           return Message.getDefaultInstance();
         } else {
-          if (packCase_ == 2) {
+          if (packCase_ == 3) {
             return messageBuilder_.getMessage();
           }
           return Message.getDefaultInstance();
         }
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        */
       public Builder setMessage(Message value) {
         if (messageBuilder_ == null) {
@@ -2062,11 +2062,11 @@ public final class MessageOuterClass {
         } else {
           messageBuilder_.setMessage(value);
         }
-        packCase_ = 2;
+        packCase_ = 3;
         return this;
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        */
       public Builder setMessage(
           Message.Builder builderForValue) {
@@ -2076,15 +2076,15 @@ public final class MessageOuterClass {
         } else {
           messageBuilder_.setMessage(builderForValue.build());
         }
-        packCase_ = 2;
+        packCase_ = 3;
         return this;
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        */
       public Builder mergeMessage(Message value) {
         if (messageBuilder_ == null) {
-          if (packCase_ == 2 &&
+          if (packCase_ == 3 &&
               pack_ != Message.getDefaultInstance()) {
             pack_ = Message.newBuilder((Message) pack_)
                 .mergeFrom(value).buildPartial();
@@ -2093,26 +2093,26 @@ public final class MessageOuterClass {
           }
           onChanged();
         } else {
-          if (packCase_ == 2) {
+          if (packCase_ == 3) {
             messageBuilder_.mergeFrom(value);
           }
           messageBuilder_.setMessage(value);
         }
-        packCase_ = 2;
+        packCase_ = 3;
         return this;
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        */
       public Builder clearMessage() {
         if (messageBuilder_ == null) {
-          if (packCase_ == 2) {
+          if (packCase_ == 3) {
             packCase_ = 0;
             pack_ = null;
             onChanged();
           }
         } else {
-          if (packCase_ == 2) {
+          if (packCase_ == 3) {
             packCase_ = 0;
             pack_ = null;
           }
@@ -2121,33 +2121,33 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        */
       public Message.Builder getMessageBuilder() {
         return getMessageFieldBuilder().getBuilder();
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        */
       @Override
       public MessageOrBuilder getMessageOrBuilder() {
-        if ((packCase_ == 2) && (messageBuilder_ != null)) {
+        if ((packCase_ == 3) && (messageBuilder_ != null)) {
           return messageBuilder_.getMessageOrBuilder();
         } else {
-          if (packCase_ == 2) {
+          if (packCase_ == 3) {
             return (Message) pack_;
           }
           return Message.getDefaultInstance();
         }
       }
       /**
-       * <code>.message.Message message = 2;</code>
+       * <code>.message.Message message = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           Message, Message.Builder, MessageOrBuilder>
           getMessageFieldBuilder() {
         if (messageBuilder_ == null) {
-          if (!(packCase_ == 2)) {
+          if (!(packCase_ == 3)) {
             pack_ = Message.getDefaultInstance();
           }
           messageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2157,7 +2157,7 @@ public final class MessageOuterClass {
                   isClean());
           pack_ = null;
         }
-        packCase_ = 2;
+        packCase_ = 3;
         onChanged();;
         return messageBuilder_;
       }
@@ -2165,33 +2165,33 @@ public final class MessageOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           Reply, Reply.Builder, ReplyOrBuilder> responseBuilder_;
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        * @return Whether the response field is set.
        */
       @Override
       public boolean hasResponse() {
-        return packCase_ == 3;
+        return packCase_ == 4;
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        * @return The response.
        */
       @Override
       public Reply getResponse() {
         if (responseBuilder_ == null) {
-          if (packCase_ == 3) {
+          if (packCase_ == 4) {
             return (Reply) pack_;
           }
           return Reply.getDefaultInstance();
         } else {
-          if (packCase_ == 3) {
+          if (packCase_ == 4) {
             return responseBuilder_.getMessage();
           }
           return Reply.getDefaultInstance();
         }
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        */
       public Builder setResponse(Reply value) {
         if (responseBuilder_ == null) {
@@ -2203,11 +2203,11 @@ public final class MessageOuterClass {
         } else {
           responseBuilder_.setMessage(value);
         }
-        packCase_ = 3;
+        packCase_ = 4;
         return this;
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        */
       public Builder setResponse(
           Reply.Builder builderForValue) {
@@ -2217,15 +2217,15 @@ public final class MessageOuterClass {
         } else {
           responseBuilder_.setMessage(builderForValue.build());
         }
-        packCase_ = 3;
+        packCase_ = 4;
         return this;
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        */
       public Builder mergeResponse(Reply value) {
         if (responseBuilder_ == null) {
-          if (packCase_ == 3 &&
+          if (packCase_ == 4 &&
               pack_ != Reply.getDefaultInstance()) {
             pack_ = Reply.newBuilder((Reply) pack_)
                 .mergeFrom(value).buildPartial();
@@ -2234,26 +2234,26 @@ public final class MessageOuterClass {
           }
           onChanged();
         } else {
-          if (packCase_ == 3) {
+          if (packCase_ == 4) {
             responseBuilder_.mergeFrom(value);
           }
           responseBuilder_.setMessage(value);
         }
-        packCase_ = 3;
+        packCase_ = 4;
         return this;
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        */
       public Builder clearResponse() {
         if (responseBuilder_ == null) {
-          if (packCase_ == 3) {
+          if (packCase_ == 4) {
             packCase_ = 0;
             pack_ = null;
             onChanged();
           }
         } else {
-          if (packCase_ == 3) {
+          if (packCase_ == 4) {
             packCase_ = 0;
             pack_ = null;
           }
@@ -2262,33 +2262,33 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        */
       public Reply.Builder getResponseBuilder() {
         return getResponseFieldBuilder().getBuilder();
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        */
       @Override
       public ReplyOrBuilder getResponseOrBuilder() {
-        if ((packCase_ == 3) && (responseBuilder_ != null)) {
+        if ((packCase_ == 4) && (responseBuilder_ != null)) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          if (packCase_ == 3) {
+          if (packCase_ == 4) {
             return (Reply) pack_;
           }
           return Reply.getDefaultInstance();
         }
       }
       /**
-       * <code>.message.Reply response = 3;</code>
+       * <code>.message.Reply response = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           Reply, Reply.Builder, ReplyOrBuilder>
           getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          if (!(packCase_ == 3)) {
+          if (!(packCase_ == 4)) {
             pack_ = Reply.getDefaultInstance();
           }
           responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2298,7 +2298,7 @@ public final class MessageOuterClass {
                   isClean());
           pack_ = null;
         }
-        packCase_ = 3;
+        packCase_ = 4;
         onChanged();;
         return responseBuilder_;
       }
@@ -3012,20 +3012,20 @@ public final class MessageOuterClass {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\rmessage.proto\022\007message\"\213\001\n\007Message\022\n\n\002" +
-      "id\030\001 \001(\003\022!\n\003cmd\030\002 \001(\0162\024.message.MessageT" +
-      "ype\022\017\n\007form_id\030\003 \001(\003\022\r\n\005to_id\030\004 \001(\003\022\023\n\013c" +
-      "reate_time\030\005 \001(\003\022\014\n\004body\030\006 \001(\014\022\016\n\006length" +
-      "\030\007 \001(\005\"\205\001\n\016MessageRequest\022\"\n\004type\030\001 \001(\0162" +
-      "\024.message.RequestType\022#\n\007message\030\002 \001(\0132\020" +
-      ".message.MessageH\000\022\"\n\010response\030\003 \001(\0132\016.m" +
-      "essage.ReplyH\000B\006\n\004pack\"3\n\005Reply\022\014\n\004code\030" +
-      "\001 \001(\005\022\016\n\006msg_id\030\002 \001(\003\022\014\n\004body\030\003 \001(\014*(\n\013R" +
-      "equestType\022\013\n\007Request\020\000\022\014\n\010Response\020\001*\204\001" +
-      "\n\013MessageType\022\010\n\004Pong\020\000\022\r\n\tHandshake\020\001\022\n" +
-      "\n\006Online\020\002\022\013\n\007Offline\020\003\022\010\n\004File\020\004\022\020\n\014Gro" +
-      "upMessage\020\005\022\022\n\016PrivateMessage\020\006\022\023\n\017Syste" +
-      "mBroadcast\020\007b\006proto3"
+      "\n\rmessage.proto\022\007message\"h\n\007Message\022\n\n\002i" +
+      "d\030\001 \001(\003\022\017\n\007form_id\030\002 \001(\003\022\r\n\005to_id\030\003 \001(\003\022" +
+      "\023\n\013create_time\030\004 \001(\003\022\014\n\004body\030\005 \001(\014\022\016\n\006le" +
+      "ngth\030\006 \001(\005\"\250\001\n\016MessageRequest\022\"\n\004type\030\001 " +
+      "\001(\0162\024.message.RequestType\022!\n\003cmd\030\002 \001(\0162\024" +
+      ".message.MessageType\022#\n\007message\030\003 \001(\0132\020." +
+      "message.MessageH\000\022\"\n\010response\030\004 \001(\0132\016.me" +
+      "ssage.ReplyH\000B\006\n\004pack\"3\n\005Reply\022\014\n\004code\030\001" +
+      " \001(\005\022\016\n\006msg_id\030\002 \001(\003\022\014\n\004body\030\003 \001(\014*(\n\013Re" +
+      "questType\022\013\n\007Request\020\000\022\014\n\010Response\020\001*\204\001\n" +
+      "\013MessageType\022\010\n\004Pong\020\000\022\r\n\tHandshake\020\001\022\n\n" +
+      "\006Online\020\002\022\013\n\007Offline\020\003\022\010\n\004File\020\004\022\020\n\014Grou" +
+      "pMessage\020\005\022\022\n\016PrivateMessage\020\006\022\023\n\017System" +
+      "Broadcast\020\007b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -3036,13 +3036,13 @@ public final class MessageOuterClass {
     internal_static_message_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_message_Message_descriptor,
-        new String[] { "Id", "Cmd", "FormId", "ToId", "CreateTime", "Body", "Length", });
+        new String[] { "Id", "FormId", "ToId", "CreateTime", "Body", "Length", });
     internal_static_message_MessageRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_message_MessageRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_message_MessageRequest_descriptor,
-        new String[] { "Type", "Message", "Response", "Pack", });
+        new String[] { "Type", "Cmd", "Message", "Response", "Pack", });
     internal_static_message_Reply_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_message_Reply_fieldAccessorTable = new

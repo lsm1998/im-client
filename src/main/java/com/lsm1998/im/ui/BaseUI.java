@@ -1,6 +1,6 @@
 package com.lsm1998.im.ui;
 
-import com.lsm1998.im.listener.ContextAwareUtil;
+import com.lsm1998.im.utils.ContextAwareUtil;
 
 import javax.swing.*;
 
@@ -39,6 +39,7 @@ public abstract class BaseUI extends JFrame
         this.setLocationRelativeTo(null);
     }
 
+    @Deprecated
     public <E> void setDate(E date)
     {
 
@@ -46,12 +47,23 @@ public abstract class BaseUI extends JFrame
 
     public abstract String title();
 
-    public void jumpPage(BaseUI oldPage,Class<? extends BaseUI> newPage)
+    /**
+     * 跳转页面
+     *
+     * @param oldPage
+     * @param newPage
+     */
+    public void jumpPage(BaseUI oldPage, Class<? extends BaseUI> newPage)
     {
         newPage(newPage);
         oldPage.dispose();
     }
 
+    /**
+     * 新建页面
+     *
+     * @param newPage
+     */
     public void newPage(Class<? extends BaseUI> newPage)
     {
         ContextAwareUtil.getBean(newPage).showPage();

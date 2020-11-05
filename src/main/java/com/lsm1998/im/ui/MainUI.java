@@ -3,17 +3,24 @@ package com.lsm1998.im.ui;
 import com.lsm1998.im.domain.Friends;
 import com.lsm1998.im.domain.Group;
 import com.lsm1998.im.domain.User;
-import com.lsm1998.im.listener.ContextAwareUtil;
+import com.lsm1998.im.utils.ContextAwareUtil;
 import com.lsm1998.im.service.HttpService;
+import com.lsm1998.im.socket.TcpClient;
 import com.lsm1998.im.ui.component.DataModel;
 import com.lsm1998.im.ui.component.HeadImg;
 import com.lsm1998.im.utils.GlobalUser;
+import com.lsm1998.im.utils.GlobalUtil;
 import com.lsm1998.im.utils.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -25,7 +32,10 @@ import java.util.List;
 @Slf4j
 public class MainUI extends BaseUI implements MouseListener
 {
+    public static final String GLOBAL_KEY = "MainUI";
+
     private final HttpService httpService;
+    private final TcpClient client;
     // 当前用户
     private User myInfo;
     private User friendInfo;
@@ -41,7 +51,7 @@ public class MainUI extends BaseUI implements MouseListener
 
     private JPopupMenu popupMenu;
 
-    private Map<String, ChatUI> chatWin = new HashMap<>();
+    public final Map<String, ChatUI> chatWin = new HashMap<>();
 
     {
         groupList = new ArrayList<>(5);
@@ -56,6 +66,7 @@ public class MainUI extends BaseUI implements MouseListener
     {
         this.myInfo = GlobalUser.getUser();
         this.httpService = ContextAwareUtil.getBean(HttpService.class);
+        this.client = ContextAwareUtil.getBean(TcpClient.class);
         if (this.myInfo == null)
         {
             log.error("用户未登录");
@@ -67,6 +78,20 @@ public class MainUI extends BaseUI implements MouseListener
             this.setResizable(false);
             this.initLayout();
         }
+    }
+
+    @PostConstruct
+    public void initMainUI()
+    {
+        log.info("initMainUI...");
+        GlobalUtil.set(GLOBAL_KEY, this);
+    }
+
+    @PreDestroy
+    public void destroyMainUI()
+    {
+        log.info("destroyMainUI...");
+        GlobalUtil.remove(GLOBAL_KEY);
     }
 
     private void initLayout()
@@ -183,7 +208,6 @@ public class MainUI extends BaseUI implements MouseListener
                 {
                     if (jLists[i].getSelectedIndex() >= 0)
                     {
-                        System.out.println("聊天");
                         openChat();
                     }
                 }
@@ -220,10 +244,23 @@ public class MainUI extends BaseUI implements MouseListener
         ChatUI chat = chatWin.get(friendInfo.getUsername());
         if (chat == null)
         {
-            chat = new ChatUI(myInfo, friendInfo);
+            chat = new ChatUI(myInfo, friendInfo, client);
             chatWin.put(friendInfo.getUsername(), chat);
         }
         chat.setVisible(true);
         return chat;
+    }
+
+    public void appendView(String title, String body)
+    {
+        try
+        {
+            ChatUI chat = openChat();
+            StyledDocument doc = new HTMLDocument();
+            chat.appendView(title, doc);
+        } catch (BadLocationException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

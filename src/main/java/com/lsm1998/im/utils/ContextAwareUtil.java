@@ -1,4 +1,4 @@
-package com.lsm1998.im.listener;
+package com.lsm1998.im.utils;
 
 import com.lsm1998.im.ui.BaseUI;
 import com.lsm1998.im.ui.LoginUI;
@@ -26,5 +26,10 @@ public class ContextAwareUtil implements ApplicationContextAware
     public static <E> E getBean(Class<E> c)
     {
         return applicationContext.getBean(c);
+    }
+
+    public static void publishEvent(Object event)
+    {
+        applicationContext.publishEvent(event);
     }
 }

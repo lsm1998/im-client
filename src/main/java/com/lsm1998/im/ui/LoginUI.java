@@ -1,6 +1,6 @@
 package com.lsm1998.im.ui;
 
-import com.lsm1998.im.listener.ContextAwareUtil;
+import com.lsm1998.im.utils.ContextAwareUtil;
 import com.lsm1998.im.service.HttpService;
 import com.lsm1998.im.utils.ImageUtil;
 import org.springframework.context.annotation.Scope;
