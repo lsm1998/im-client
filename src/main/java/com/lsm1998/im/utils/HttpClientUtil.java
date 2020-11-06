@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 
-public class HTTPClientUtil
+public class HttpClientUtil
 {
     public static final int HTTP_OK = 200;
 
@@ -50,6 +50,16 @@ public class HTTPClientUtil
         return httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofString());
     }
 
+    /**
+     * json 提交
+     *
+     * @param url
+     * @param json
+     * @param headers
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static HttpResponse<String> post(String url, String json, Map<String, String> headers) throws IOException, InterruptedException
     {
         HttpRequest.Builder builder = HttpRequest.newBuilder()
@@ -63,6 +73,15 @@ public class HTTPClientUtil
         return httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofString());
     }
 
+    /**
+     * get请求
+     *
+     * @param url
+     * @param headers
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static HttpResponse<String> get(String url, Map<String, String> headers) throws IOException, InterruptedException
     {
         HttpRequest.Builder builder = HttpRequest.newBuilder()

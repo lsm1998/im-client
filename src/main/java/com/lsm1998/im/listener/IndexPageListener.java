@@ -6,8 +6,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-
 @Service
 public class IndexPageListener implements ApplicationListener<ContextRefreshedEvent>
 {
@@ -18,8 +16,9 @@ public class IndexPageListener implements ApplicationListener<ContextRefreshedEv
         {
             try
             {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            }catch (Exception e)
+                // 加载Style
+                Class.forName("com.lsm1998.im.utils.StyleUtil");
+            } catch (ClassNotFoundException e)
             {
                 e.printStackTrace();
             }

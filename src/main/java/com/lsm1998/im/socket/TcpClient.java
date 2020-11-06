@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
@@ -26,6 +25,8 @@ public class TcpClient
 
     private OutputStream outputStream;
 
+    private boolean connect;
+
     @PostConstruct
     public void init()
     {
@@ -36,9 +37,20 @@ public class TcpClient
             this.responseHandler = new ResponseHandler(socket.getInputStream());
             this.responseHandler.start();
             log.info("连接完成");
+            this.connect = true;
         } catch (IOException e)
         {
+            this.connect = false;
             log.error("连接完成失败,err={}", e.getMessage());
+        }
+    }
+
+    private void checkConnect()
+    {
+        if (!this.connect)
+        {
+            log.error("离线状态发送数据失败");
+            throw new RuntimeException("离线状态发送数据失败");
         }
     }
 
@@ -80,6 +92,7 @@ public class TcpClient
 
     private void send(MessageOuterClass.Message msg, MessageOuterClass.MessageType cmd) throws IOException
     {
+        checkConnect();
         MessageOuterClass.MessageRequest request = MessageOuterClass.
                 MessageRequest.newBuilder()
                 .setType(MessageOuterClass.RequestType.Request)
@@ -91,5 +104,10 @@ public class TcpClient
     public boolean isOnLien()
     {
         return this.responseHandler != null && this.responseHandler.isOnline();
+    }
+
+    public boolean isConnect()
+    {
+        return connect;
     }
 }

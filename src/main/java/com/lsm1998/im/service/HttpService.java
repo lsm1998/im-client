@@ -5,7 +5,7 @@ import com.lsm1998.im.domain.Friends;
 import com.lsm1998.im.domain.User;
 import com.lsm1998.im.socket.TcpClient;
 import com.lsm1998.im.utils.GlobalUser;
-import com.lsm1998.im.utils.HTTPClientUtil;
+import com.lsm1998.im.utils.HttpClientUtil;
 import com.lsm1998.im.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.lsm1998.im.utils.HTTPClientUtil.HTTP_OK;
+import static com.lsm1998.im.utils.HttpClientUtil.HTTP_OK;
 
 @Service
 @Slf4j
@@ -33,7 +33,7 @@ public class HttpService
         String json = String.format("{\"username\": \"%s\", \"password\": \"%s\",\"rememberMe\":true}", username, password);
         try
         {
-            HttpResponse<String> response = HTTPClientUtil.post(globalConfig.getWebBaseUrl() + "base/login", json, null);
+            HttpResponse<String> response = HttpClientUtil.post(globalConfig.getWebBaseUrl() + "base/login", json, null);
             if (response.statusCode() == HTTP_OK)
             {
                 log.info("登录成功,body={}", response.body());
@@ -69,7 +69,7 @@ public class HttpService
         headers.put("token", user.getToken());
         try
         {
-            HttpResponse<String> response = HTTPClientUtil.get(globalConfig.getWebBaseUrl() + "user/friendsList", headers);
+            HttpResponse<String> response = HttpClientUtil.get(globalConfig.getWebBaseUrl() + "user/friendsList", headers);
             return JsonUtil.parseGroupList(response.body());
         } catch (Exception e)
         {
