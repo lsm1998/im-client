@@ -1,8 +1,10 @@
 package com.lsm1998.im.ui;
 
 import com.lsm1998.im.utils.ContextAwareUtil;
+import com.lsm1998.im.utils.ImageUtil;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class BaseUI extends JFrame
 {
@@ -67,5 +69,25 @@ public abstract class BaseUI extends JFrame
     public void newPage(Class<? extends BaseUI> newPage)
     {
         ContextAwareUtil.getBean(newPage).showPage();
+    }
+
+    /**
+     * 设置本地图片
+     *
+     * @param path
+     */
+    public void setLocalIconImage(String path)
+    {
+        super.setIconImage(ImageUtil.getImageByPath(path));
+    }
+
+    /**
+     * 设置网络图片
+     *
+     * @param url
+     */
+    public void setNetworkIconImage(String url)
+    {
+        super.setIconImage(ImageUtil.getImageByUrl(url));
     }
 }

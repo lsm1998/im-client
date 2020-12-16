@@ -73,7 +73,7 @@ public class MainUI extends BaseUI implements MouseListener
             this.jumpPage(this, LoginUI.class);
         } else
         {
-            setIconImage(ImageUtil.getImageByPath("/static/images/im.png"));
+            this.setLocalIconImage("/static/images/im.png");
             this.setDefaultCloseOperation(EXIT_ON_CLOSE);
             this.setResizable(false);
             this.initLayout();

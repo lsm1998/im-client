@@ -11,6 +11,9 @@ import java.util.List;
 
 public class JsonUtil
 {
+    private static final String EMPTY_OBJECT = "{}";
+    private static final String EMPTY_ARRAYS = "[]";
+
     public static User parseUser(String body)
     {
         try
@@ -39,6 +42,10 @@ public class JsonUtil
 
     public static List<Friends> parseGroupList(String body)
     {
+        if (EMPTY_OBJECT.equals(body))
+        {
+            return List.of();
+        }
         List<Friends> result = new ArrayList<>();
         JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
         JsonArray friendsList = jsonObject.get("list").getAsJsonArray();

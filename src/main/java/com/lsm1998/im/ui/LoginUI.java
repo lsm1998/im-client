@@ -20,7 +20,7 @@ public class LoginUI extends BaseUI
 
     public LoginUI()
     {
-        setIconImage(ImageUtil.getImageByPath("/static/images/icon.png"));
+        this.setLocalIconImage("/static/images/icon.png");
         this.setSize(430, 330);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.httpService = ContextAwareUtil.getBean(HttpService.class);

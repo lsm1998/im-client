@@ -71,6 +71,11 @@ public class TcpClient
     public void sendHandshake(String token) throws IOException
     {
         User user = GlobalUser.getUser();
+
+
+
+
+
         MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
                 .setLength(token.getBytes().length)
                 .setFormId(user.getId())
